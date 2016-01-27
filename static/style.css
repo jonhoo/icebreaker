@@ -73,6 +73,9 @@ blockquote {
 	padding: .5em;
 	margin: 1em 1%;
 }
+	blockquote.instructor {
+		border-left: 3px solid gold;
+	}
 	blockquote p {
 		margin: 0;
 		padding: 0;
