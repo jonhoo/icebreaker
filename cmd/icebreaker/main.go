@@ -3,13 +3,15 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
 
-	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/sha3"
+	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/github.com/gin-gonic/gin"
+	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/golang.org/x/crypto/sha3"
 )
 
 type question struct {
@@ -29,8 +31,16 @@ var rmx sync.Mutex
 var rooms map[string]*room
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	rooms = make(map[string]*room)
-	router := gin.Default()
+	router := gin.New()
+	router.Use(gin.Logger())
+	router.Static("/static", "static")
+	router.LoadHTMLGlob("templates/*")
 
 	router.GET("/poll/:slug/:code", func(c *gin.Context) {
 		rmx.Lock()
@@ -136,9 +146,5 @@ func main() {
 		c.Redirect(http.StatusFound, to.RequestURI())
 	})
 
-	router.Static("/static", "./static")
-	router.LoadHTMLGlob("./templates/*")
-
-	// Listen and server on 0.0.0.0:8080
-	router.Run(":8080")
+	router.Run(":" + port)
 }

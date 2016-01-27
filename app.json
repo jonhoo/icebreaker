@@ -1,0 +1,14 @@
+{
+  "name": "icebreaker",
+  "description": "Web app that allows students to ask real-time, anonymous questions during class",
+  "keywords": [
+    "questions",
+    "education",
+    "student",
+    "class"
+  ],
+  "image": "heroku/go:1.5",
+  "mount_dir": "src/github.com/jonhoo/icebreaker",
+  "website": "https://github.com/jonhoo/icebreaker",
+  "repository": "https://github.com/jonhoo/icebreaker"
+}

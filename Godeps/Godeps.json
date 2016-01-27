@@ -1,0 +1,35 @@
+{
+	"ImportPath": "github.com/jonhoo/icebreaker",
+	"GoVersion": "go1.5.3",
+	"Packages": [
+		"github.com/jonhoo/icebreaker/..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-208-gc1e660d",
+			"Rev": "c1e660dd1a071f7c8cf39c7cc181800ba15672f0"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "6aaa8d47701fa6cf07e914ec01fde3d4a1fe79c3"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/sse",
+			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/sha3",
+			"Rev": "1f22c0103821b9390939b6776727195525381532"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "b6fdb7d8a4ccefede406f8fe0f017fb58265054c"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.15.1",
+			"Rev": "c193cecd124b5cc722d7ee5538e945bdb3348435"
+		}
+	]
+}
