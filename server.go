@@ -84,13 +84,24 @@ func main() {
 			rooms[c.Param("slug")] = r
 		}
 
-		if c.Param("code") == r.icode {
-			c.String(http.StatusOK, "Authenticated as instructor.\nStudent code is '%s'.", r.scode)
-		} else if c.Param("code") == r.scode {
-			c.String(http.StatusOK, "Authenticated as student.")
-		} else {
-			c.String(http.StatusUnauthorized, "Wrong code given for this room.")
+		if c.Param("code") != r.icode && c.Param("code") != r.scode {
+			c.HTML(http.StatusUnauthorized, "bad.tmpl", gin.H{
+				"room": c.Param("slug"),
+			})
+			return
 		}
+
+		revqs := make([]question, len(r.qs))
+		for i := range r.qs {
+			revqs[i] = r.qs[len(r.qs)-i-1]
+		}
+		c.HTML(http.StatusOK, "room.tmpl", gin.H{
+			"room":       c.Param("slug"),
+			"instructor": c.Param("code") == r.icode,
+			"submitted":  c.DefaultQuery("submitted", "0"),
+			"qs":         revqs,
+			"scode":      r.scode,
+		})
 	})
 
 	router.POST("/room/:slug/:code", func(c *gin.Context) {
@@ -114,14 +125,19 @@ func main() {
 			return
 		}
 
-		nick := c.DefaultPostForm("nick", "student")
+		nick := strings.TrimSpace(c.DefaultPostForm("nick", ""))
 		r.qs = append(r.qs, question{
 			Text: q,
 			Inst: c.Param("code") == r.icode,
 			By:   nick,
 		})
-		c.String(http.StatusOK, "Question was posted.")
+		to := *c.Request.URL
+		to.RawQuery = "submitted=1"
+		c.Redirect(http.StatusFound, to.RequestURI())
 	})
+
+	router.Static("/static", "./static")
+	router.LoadHTMLGlob("./templates/*")
 
 	// Listen and server on 0.0.0.0:8080
 	router.Run(":8080")

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{.room}} questions</title>
+		<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	</head>
+	<body>
+		<h1>{{.room}} questions</h1>
+		{{if .instructor}}
+		<h2>
+			Student code: <a href="/room/{{.room}}/{{.scode}}">{{.scode}}</a>
+		</h2>
+		{{end}}
+		{{if eq .submitted "1"}}
+			{{if .instructor}}
+			<p class="msg">
+			Your note has been posted.
+			</p>
+			{{else}}
+			<p class="msg">
+			Your question has been sent to the TAs.
+			</p>
+			{{end}}
+		{{end}}
+		<form action="" method="post">
+			<label for="nick">Nickname</label>
+			<input type="text" name="nick" placeholder="student" />
+			<label for="question">Question</label>
+			<textarea rows=3 name="question" required></textarea>
+			<input type="submit" value="Submit question" />
+		</form>
+		{{if .instructor}}
+		<section>
+		<h2>Student questions</h2>
+		{{range .qs}}
+		<blockquote class="question {{if .Inst}}instructor{{end}}">
+			<p>{{.Text}}</p>
+			{{if ne .By ""}}
+			<footer>
+				<cite>{{.By}}</cite>
+			</footer>
+			{{end}}
+		</blockquote>
+		{{end}}
+		</section>
+		{{end}}
+	</body>
+</html>

@@ -1,0 +1,87 @@
+html {
+	min-height: 100%;
+	background: #F7F7F7;
+}
+body {
+	width: 100%;
+	max-width: 30em;
+	margin: 0 auto;
+	padding: 5em 1em 1em;
+	min-height: 100%;
+	background: #F0F0F0;
+	border: 2px solid #EAEAEA;
+	border-top-width: 0;
+}
+h1 {
+	text-align: center;
+	margin-bottom: 0;
+	color: #444;
+}
+h2 {
+	text-align: center;
+	font-size: 100%;
+	color: #444;
+	margin: 0;
+}
+.msg {
+	width: 100%;
+	padding: .5rem;
+	margin: 1em 1%;
+	box-sizing: border-box;
+	border: 1px solid #5bb75b;
+	background-color: #7bd77b;
+	font-weight: bold;
+	font-size: small;
+	text-align: center;
+}
+	.msg.error {
+		border-color: #b75b5b;
+		background-color: #d77b7b;
+	}
+form {
+	padding-top: 2em;
+	text-align: right;
+}
+	.msg + form { padding-top: 0; }
+	label {
+		font-weight: bold;
+		display: block;
+		text-align: left;
+	}
+	input[type=text], textarea {
+		display: block;
+		box-sizing: border-box;
+		border: 2px solid #EAEAEA;
+		padding: .5em;
+		text-align: left;
+		margin: 1%;
+		width: 98%;
+	}
+	input[type=submit] {
+		display: inline-block;
+		border: 1px solid #3b973b;
+		background-color: #5bb75b;
+		color: white;
+		padding: .5em;
+		margin-right: 1%;
+	}
+section h2 {
+	margin-top: 2em;
+}
+blockquote {
+	background: white;
+	padding: .5em;
+	margin: 1em 1%;
+}
+	blockquote p {
+		margin: 0;
+		padding: 0;
+	}
+	blockquote footer {
+		display: block;
+		border-top: 1px solid #EAEAEA;
+		padding-top: .25rem;
+		margin-top: .25rem;
+		font-size: small;
+		text-align: right;
+	}
