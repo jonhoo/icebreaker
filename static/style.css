@@ -1,13 +1,13 @@
 html {
-	min-height: 100%;
+	overflow-y: scroll;
 	background: #F7F7F7;
+	padding: 0;
+	margin: 0;
 }
 body {
-	width: 100%;
 	max-width: 30em;
 	margin: 0 auto;
-	padding: 5em 1em 1em;
-	min-height: 100%;
+	padding: 2em 1em 1em;
 	background: #F0F0F0;
 	border: 2px solid #EAEAEA;
 	border-top-width: 0;
@@ -23,6 +23,12 @@ h2 {
 	color: #444;
 	margin: 0;
 }
+	h2 a {
+		font-family: monospace;
+		text-decoration: none;
+		color: #0C6FA9;
+		font-size: large;
+	}
 .msg {
 	width: 100%;
 	padding: .5rem;
