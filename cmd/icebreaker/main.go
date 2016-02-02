@@ -68,7 +68,8 @@ func main() {
 		}
 
 		if since >= len(r.qs) {
-			c.JSON(http.StatusNoContent, []question{})
+			c.Status(http.StatusNoContent)
+			//c.JSON(http.StatusOK, []question{})
 			return
 		}
 
