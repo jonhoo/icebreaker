@@ -81,6 +81,15 @@ func main() {
 		defer rmx.Unlock()
 		r, ok := rooms[c.Param("slug")]
 		if !ok {
+			if len(c.Param("code")) == 8 {
+				if _, err := hex.DecodeString(c.Param("code")); err == nil {
+					c.String(http.StatusGone,
+						"Cannot create rooms with an instructor key that resembles a hash.\nYou may get this error if the instructors haven't created the room yet.",
+					)
+					return
+				}
+			}
+
 			h := sha3.Sum512([]byte(c.Param("code")))
 			scode := hex.EncodeToString(h[:])[0:8]
 			r = &room{
