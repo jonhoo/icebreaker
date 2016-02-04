@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/github.com/gin-gonic/gin"
 	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/golang.org/x/crypto/sha3"
@@ -44,36 +45,53 @@ func main() {
 
 	router.GET("/poll/:slug/:code", func(c *gin.Context) {
 		rmx.Lock()
-		defer rmx.Unlock()
 
 		r, ok := rooms[c.Param("slug")]
 		if !ok {
+			rmx.Unlock()
 			c.String(http.StatusNotFound, "That room does not exist.")
 			return
 		}
 
 		if c.Param("code") == r.scode {
+			rmx.Unlock()
 			c.String(http.StatusForbidden, "This page is only available to instructors.")
 			return
 		}
 		if c.Param("code") != r.icode {
+			rmx.Unlock()
 			c.String(http.StatusUnauthorized, "Wrong code given for this room.")
 			return
 		}
 
 		since, err := strconv.Atoi(c.DefaultQuery("since", "0"))
 		if err != nil || since < 0 {
+			rmx.Unlock()
 			c.String(http.StatusBadRequest, "Non-integer 'since' given")
 			return
 		}
 
-		if since >= len(r.qs) {
-			c.Status(http.StatusNoContent)
-			//c.JSON(http.StatusOK, []question{})
-			return
+		first := time.Now()
+		for since >= len(r.qs) {
+			rmx.Unlock()
+
+			// Heroku doesn't allow long-polling for more than 30s
+			// without sending data. We could potentially send
+			// parts of an empty JSON array or something, but this
+			// is vastly simpler, and still improves on the simple
+			// polling we used before.
+			if time.Now().Sub(first) >= 20*time.Second {
+				c.Status(http.StatusNoContent)
+				//c.JSON(http.StatusOK, []question{})
+				return
+			}
+
+			<-time.After(500 * time.Millisecond)
+			rmx.Lock()
 		}
 
 		c.JSON(http.StatusOK, r.qs[since:])
+		rmx.Unlock()
 	})
 
 	router.GET("/room/:slug/:code", func(c *gin.Context) {

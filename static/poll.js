@@ -2,8 +2,6 @@ if (!self.fetch) {
 	throw new Error("Browser does not support fetch(); manual refresh required");
 }
 
-var timer;
-var interval = 5*1000;
 var to = window.location.pathname.replace("/room/", "/poll/");
 var since = document.getElementsByClassName("question").length;
 console.log(to);
@@ -18,8 +16,7 @@ function poll() {
 		}
 
 		if (res.status == 204) {
-			timer = window.setTimeout(poll, interval);
-			return
+			return poll();
 		}
 
 		res.json().then(function (res) {
@@ -41,9 +38,9 @@ function poll() {
 				qs[0].parentNode.insertBefore(qe, qs[0]);
 			});
 			since = document.getElementsByClassName("question").length;
-			timer = window.setTimeout(poll, interval);
+			poll();
 		});
 	});
 }
 
-timer = window.setTimeout(poll, interval);
+poll();
