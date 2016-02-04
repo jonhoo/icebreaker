@@ -45,28 +45,30 @@ func main() {
 
 	router.GET("/poll/:slug/:code", func(c *gin.Context) {
 		rmx.Lock()
+		locked := true
+		defer func() {
+			if locked {
+				rmx.Unlock()
+			}
+		}()
 
 		r, ok := rooms[c.Param("slug")]
 		if !ok {
-			rmx.Unlock()
 			c.String(http.StatusNotFound, "That room does not exist.")
 			return
 		}
 
 		if c.Param("code") == r.scode {
-			rmx.Unlock()
 			c.String(http.StatusForbidden, "This page is only available to instructors.")
 			return
 		}
 		if c.Param("code") != r.icode {
-			rmx.Unlock()
 			c.String(http.StatusUnauthorized, "Wrong code given for this room.")
 			return
 		}
 
 		since, err := strconv.Atoi(c.DefaultQuery("since", "0"))
 		if err != nil || since < 0 {
-			rmx.Unlock()
 			c.String(http.StatusBadRequest, "Non-integer 'since' given")
 			return
 		}
@@ -74,6 +76,7 @@ func main() {
 		first := time.Now()
 		for since >= len(r.qs) {
 			rmx.Unlock()
+			locked = false
 
 			// Heroku doesn't allow long-polling for more than 30s
 			// without sending data. We could potentially send
@@ -88,10 +91,10 @@ func main() {
 
 			<-time.After(500 * time.Millisecond)
 			rmx.Lock()
+			locked = true
 		}
 
 		c.JSON(http.StatusOK, r.qs[since:])
-		rmx.Unlock()
 	})
 
 	router.GET("/room/:slug/:code", func(c *gin.Context) {
