@@ -12,6 +12,17 @@ body {
 	border: 2px solid #EAEAEA;
 	border-top-width: 0;
 }
+body > footer {
+	position: relative;
+	top: 3rem;
+	display: block;
+	font-size: small;
+	text-align: center;
+	color: #888;
+}
+	body > footer a {
+		color: #0C6FA9;
+	}
 h1 {
 	text-align: center;
 	margin-bottom: 0;
