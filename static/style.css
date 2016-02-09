@@ -11,14 +11,16 @@ body {
 	background: #F0F0F0;
 	border: 2px solid #EAEAEA;
 	border-top-width: 0;
+	position: relative;
 }
 body > footer {
-	position: relative;
-	top: 3rem;
+	position: absolute;
+	bottom: -4rem;
 	display: block;
+	width: 100%;
 	font-size: small;
 	text-align: center;
-	color: #888;
+	opacity: 0.4;
 }
 	body > footer a {
 		color: #0C6FA9;

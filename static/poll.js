@@ -4,6 +4,8 @@ if (!self.fetch) {
 
 var to = window.location.pathname.replace("/room/", "/poll/");
 var since = document.getElementsByClassName("question").length;
+var newdata = false;
+var shown = true;
 console.log(to);
 
 function poll() {
@@ -37,10 +39,28 @@ function poll() {
 				qe.getElementsByTagName("p")[0].textContent = q.text;
 				qs[0].parentNode.insertBefore(qe, qs[0]);
 			});
+
+			if (!shown) {
+				document.getElementById("icon").href = "/static/new-question.ico";
+			}
+			newdata = true
+
 			since = document.getElementsByClassName("question").length;
 			poll();
 		});
 	});
 }
+
+window.addEventListener("focus", function(e) {
+	if (newdata) {
+		document.getElementById("icon").href = "/static/no-question.ico";
+		newdata = false;
+	}
+	shown = true
+}, false);
+
+window.addEventListener("blur", function(e) {
+	shown = false
+}, false);
 
 poll();

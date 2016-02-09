@@ -6,6 +6,11 @@
 		<title>{{.room}} questions</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="/static/style.css" />
+		{{if .instructor}}
+		<link rel="shortcut icon" id="icon" href="/static/no-question.ico" />
+		{{else}}
+		<link rel="shortcut icon" id="icon" href="/static/question.ico" />
+		{{end}}
 	</head>
 	<body>
 		<h1>{{.room}} questions</h1>
@@ -51,7 +56,10 @@
 		<script type="text/javascript" src="/static/poll.js"></script>
 		{{end}}
 		<footer>
-			Available on <a href="https://github.com/jonhoo/icebreaker">GitHub</a>.
+			Available on <a href="https://github.com/jonhoo/icebreaker">GitHub</a>.<br />
+			Favicons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a><br />
+		        and licensed under
+			<a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
 		</footer>
 	</body>
 </html>
