@@ -94,6 +94,15 @@ func main() {
 			locked = true
 		}
 
+		// For minimal latency between a student asking a question and
+		// it appearing in the instructor's view, no caches should
+		// store the reply to a poll. Note that this means that if many
+		// instructors are accessing the instructor's view, every
+		// single one will cause a request to be sent to the backend.
+		// For most use-cases, this should not be an issue. That said,
+		// if your class has *a lot* of instructors, you may want to
+		// set this to something like max-age=5.
+		c.Header("Cache-Control", "no-cache")
 		c.JSON(http.StatusOK, r.qs[since:])
 	})
 
