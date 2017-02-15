@@ -25,9 +25,9 @@ the room URLs.
 
 Once Ice Breaker has been deployed (see below), usage is
 straightforward. To create a new room, simply point your browser at
-`$URL/rooms/$ROOM/$KEY`. A student key (`$SKEY`) will be automatically
+`$URL/room/$ROOM/$KEY`. A student key (`$SKEY`) will be automatically
 generated from the instructor key, and will be shown in the instructor
-view. Student can now access the room using `$URL/rooms/$ROOM/$SKEY`.
+view. Student can now access the room using `$URL/room/$ROOM/$SKEY`.
 Other instructors can join the room by using the same URL as was used to
 create the room. The rooms should also be easily accessible on mobile
 phones.
