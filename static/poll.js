@@ -4,9 +4,9 @@ if (!self.fetch) {
 
 var to = window.location.pathname.replace("/room/", "/poll/");
 var since = document.getElementsByClassName("question").length;
-var newdata = false;
+var newdata = 0;
 var shown = true;
-console.log(to);
+var title = document.title;
 
 function poll() {
 	fetch(to + "?since=" + since).then(function(res) {
@@ -38,12 +38,15 @@ function poll() {
 
 				qe.getElementsByTagName("p")[0].textContent = q.text;
 				qs[0].parentNode.insertBefore(qe, qs[0]);
+				newdata += 1;
 			});
 
 			if (!shown) {
 				document.getElementById("icon").href = "/static/new-question.ico";
 			}
-			newdata = true
+			if (newdata != 0) {
+				document.title = "(" + newdata + ") " + title;
+			}
 
 			since = document.getElementsByClassName("question").length;
 			poll();
@@ -52,9 +55,11 @@ function poll() {
 }
 
 window.addEventListener("focus", function(e) {
-	if (newdata) {
+	if (newdata != 0) {
 		document.getElementById("icon").href = "/static/no-question.ico";
-		newdata = false;
+		// show (newdata) in window title to give notification bubble
+		document.title = title;
+		newdata = 0;
 	}
 	shown = true
 }, false);
