@@ -1,12 +1,23 @@
 {
 	"ImportPath": "github.com/jonhoo/icebreaker",
-	"GoVersion": "go1.5.3",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v78",
 	"Packages": [
 		"github.com/jonhoo/icebreaker/..."
 	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-208-gc1e660d",
+			"Rev": "c1e660dd1a071f7c8cf39c7cc181800ba15672f0"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.0rc1-208-gc1e660d",
+			"Rev": "c1e660dd1a071f7c8cf39c7cc181800ba15672f0"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
 			"Comment": "v1.0rc1-208-gc1e660d",
 			"Rev": "c1e660dd1a071f7c8cf39c7cc181800ba15672f0"
 		},
