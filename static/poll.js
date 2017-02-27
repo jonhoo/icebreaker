@@ -8,6 +8,30 @@ var newdata = 0;
 var shown = true;
 var title = document.title;
 
+var notifyNewQuestion = function(text) {
+	if (Notification.permission === "granted") {
+		new Notification("A new question was posted",
+			{
+				body: text,
+				badge: "/static/new-question.ico",
+				icon: "/static/new-question.ico",
+			}
+		)
+	}
+}
+
+if (("Notification" in window)) {
+	if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+		Notification.requestPermission(function(permission) {
+			if (permission !== "granted") {
+				notifyNewQuestion = function() {}
+			}
+		})
+	}
+} else {
+	notifyNewQuestion = function() {}
+}
+
 function poll() {
 	fetch(to + "?since=" + since).then(function(res) {
 		if (!res.ok) {
@@ -39,6 +63,8 @@ function poll() {
 				qe.getElementsByTagName("p")[0].textContent = q.text;
 				qs[0].parentNode.insertBefore(qe, qs[0]);
 				newdata += 1;
+
+				notifyNewQuestion(q.text)
 			});
 
 			if (!shown) {
