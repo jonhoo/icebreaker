@@ -1,1 +1,1 @@
-web: icebreaker
+web: bin/icebreaker

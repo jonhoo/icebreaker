@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/github.com/gin-gonic/gin"
-	"github.com/jonhoo/icebreaker/Godeps/_workspace/src/golang.org/x/crypto/sha3"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/sha3"
 )
 
 type question struct {
